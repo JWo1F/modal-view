@@ -2,10 +2,11 @@
   "name": "modal-view",
   "version": "0.0.1",
   "description": "A react way to show modals",
-  "main": "dist/modal_view.js",
+  "main": "build/bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --config webpack.config.js --mode development"
+    "start": "webpack-dev-server --config webpack.config.js --mode development",
+    "build": "rm -rf build && mkdir -p build && rollup -c"
   },
   "repository": {
     "type": "git",
@@ -34,9 +35,20 @@
     "autoprefixer": "^9.4.10",
     "babel-loader": "^8.0.5",
     "css-loader": "^2.1.1",
+    "cssnano": "^4.1.10",
+    "cssnano-preset-advanced": "^4.0.7",
     "html-webpack-plugin": "^3.2.0",
+    "mime-types": "^2.1.22",
     "mini-css-extract-plugin": "^0.5.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
+    "postcss-modules": "^1.4.1",
+    "rollup": "^1.6.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-css-only": "^1.0.0",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-string": "^3.0.0",
+    "rollup-pluginutils": "^2.4.1",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
@@ -45,9 +57,9 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
-    "classnames": "^2.2.6",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4"
+    "@babel/runtime": "*",
+    "classnames": "*",
+    "react": "*",
+    "react-dom": "*"
   }
 }

@@ -14,7 +14,7 @@ const showModal1 = createModal({
     return <div>
       <div style={{ fontWeight: 'bold', fontSize: '130%', marginBottom:'15px' }}>Создание группы</div>
       <div style={{ display: 'flex' }}>
-        <div style={{ flexGrow: 1 }}>{createInput('value', { placeholder: 'Введите название группы', onChange: val => { onChangeState({ error: 0 }); onChange({ value: val }); } })}</div>
+        <div style={{ flexGrow: 1 }}>{createInput('value')}</div>
         <div style={{ flexShrink: 0, marginLeft: '10px' }}>{createButton('Проверить', () => onChangeState({ error: 1 }))}</div>
       </div>
       {!!state.error && <div style={{ color: 'red' }}>Кажется, тут ошибочка!</div>}
