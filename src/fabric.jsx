@@ -4,7 +4,7 @@ import Modal from './modal.jsx';
 import Button from './button.jsx';
 import Input from './input.jsx';
 
-export default function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr }) {
+export default function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator }) {
   return async function() {
     let result = {};
     let state = {};
@@ -39,6 +39,11 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
     const escHandler = e => cancelOnEsc && e.keyCode == 27 && onDone(false);
     
     onDone = async (isFail) => {
+      if(validator) {
+        const res = await validator({ state, result, onChangeState, onChange });
+        if(res === false) return;
+      }
+      
       await ref.close();
 
       ReactDOM.unmountComponentAtNode(div);
