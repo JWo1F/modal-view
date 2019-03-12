@@ -47,8 +47,8 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
     const enterHandler = e => confirmOnEnter && e.keyCode == 13 && onDone(true);
     const escHandler = e => cancelOnEsc && e.keyCode == 27 && onDone(false);
     
-    onDone = async (isFail) => {
-      if(!isFail && validator) {
+    onDone = async (isSuccess) => {
+      if(isSuccess && validator) {
         const res = await validator({ state, result, onChangeState, onChange });
         if(res === false) return;
       }
@@ -60,7 +60,7 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
       document.body.removeEventListener('keydown', enterHandler);
       document.body.removeEventListener('keydown', escHandler);
 
-      res(isFail);
+      res(isSuccess);
     };
 
     function update() {
