@@ -1,3 +1,2 @@
-export { default as createModal } from './fabric.jsx';
-export const showModal = (...props) => createModal(...props)();
+export { createModal, showModal } from './fabric.jsx';
 export * from './defaults.jsx';

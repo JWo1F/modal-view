@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createModal from '../src/fabric.jsx';
+import { createModal } from '../src/fabric.jsx';
 import './index.styl';
 import s from './style.styl';
 
-import { alert, confirm } from '../src/defaults.jsx';
+import { alert, confirm, prompt } from '../src/defaults.jsx';
 
 const showModal1 = createModal({
   confirm: 'Да',
@@ -48,6 +48,7 @@ class Element extends React.Component {
       <div>Нормальная <Button name="фабрика" onClick={showModal1} /></div>
       <div>Простой <Button name="конфирм" onClick={() => confirm('Подтвердите действие', 'Вы действительно хотите удалить элемент без возможности восстановления?', 'Да', 'Нет')} /></div>
       <div>Простой <Button name="алерт" onClick={() => alert('Опрос удалён', 'Опрос был успешно удалён', 'Закрыть')} /></div>
+      <div>Простой <Button name="prompt" onClick={() => prompt('Введите название', 'И тогда мы сможем создать эту сущность', 'Название', 'Создать')} /></div>
     </div>
   }
 }

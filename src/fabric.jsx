@@ -4,7 +4,11 @@ import Modal from './modal.jsx';
 import Button from './elements/button/index.jsx';
 import Input from './elements/input/index.jsx';
 
-export default function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator }) {
+export function showModal(...props) {
+  return createModal(...props)();
+}
+
+export function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator }) {
   return async function() {
     let result = {};
     let state = {};

@@ -42,8 +42,10 @@ export default class Modal extends React.Component {
 
     return <div className={c} onClick={this.backClick.bind(this)} data-back>
       <div className={s.container}>
-        {this.props.title && <div style={{ fontWeight: 'bold', fontSize: '130%', marginBottom:'15px' }}>{this.props.title}</div>}
-        {this.props.descr && <div>{this.props.descr}</div>}
+        <div className={s.header}>
+          {this.props.title && <div className={s.title}>{this.props.title}</div>}
+          {this.props.descr && <div>{this.props.descr}</div>}
+        </div>
         <div className={s.wrapper}>{this.props.children}</div>
         {!!(cancel || confirm) && <div className={s.buttons}>
           {!!cancel && <Button onClick={this.props.onCancel} background={cancel.background} color={cancel.color}>{cancel.text}</Button>}

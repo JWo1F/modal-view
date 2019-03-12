@@ -1,26 +1,37 @@
-import createModal from './fabric.jsx';
+import { showModal } from './fabric.jsx';
 
 export const alert = async (title, descr, confirmText) => {
-  const modal = createModal({
+  await showModal({
     confirm: confirmText || true,
     title,
     descr
   });
 
-  await modal();
-
   return true;
 };
 
 export const confirm = async (title, descr, confirmText, cancelText) => {
-  const modal = createModal({
+  const { isDone } = await showModal({
     confirm: confirmText || true,
     cancel: cancelText || true,
     title,
     descr
   });
 
-  const { isDone } = await modal();
-
   return isDone;
+};
+
+export const prompt = async (title, descr, placeholder, confirmText, cancelText) => {
+  const result = await showModal({
+    title,
+    descr,
+    confirm: confirmText,
+    cancel: cancelText,
+    render: ({ createInput }) => {
+      return createInput('value', { placeholder: placeholder, autoFocus: true });
+    }
+  });
+
+  if(!result.isDone) return false;
+  return result.result.value;
 };
