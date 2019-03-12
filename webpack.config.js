@@ -37,6 +37,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: [/\.svg$/],
+        loader: require.resolve('raw-loader')
+      },
+      {
         test: /\.(woff|png|jpg)$/,
         use: 'url-loader'
       },

@@ -2,6 +2,7 @@ import React from 'react';
 import s from './modal.styl';
 import cx from 'classnames';
 import Button from './elements/button/index.jsx';
+import * as icons from './icons/index.js';
 
 export default class Modal extends React.Component {
   state = {
@@ -42,15 +43,18 @@ export default class Modal extends React.Component {
 
     return <div className={c} onClick={this.backClick.bind(this)} data-back>
       <div className={s.container}>
-        <div className={s.header}>
-          {this.props.title && <div className={s.title}>{this.props.title}</div>}
-          {this.props.descr && <div>{this.props.descr}</div>}
+        {!!icons[this.props.type] && <div className={s.icon} dangerouslySetInnerHTML={{ __html: icons[this.props.type] }} />}
+        <div className={s.contentInner}>
+          <div className={s.header}>
+            {this.props.title && <div className={s.title}>{this.props.title}</div>}
+            {this.props.descr && <div className={s.descr}>{this.props.descr}</div>}
+          </div>
+          <div className={s.wrapper}>{this.props.children}</div>
+          {!!(cancel || confirm) && <div className={s.buttons}>
+            {!!cancel && <div className={s.buttonWrapper}><Button onClick={this.props.onCancel} background={cancel.background} color={cancel.color}>{cancel.text}</Button></div>}
+            {!!confirm && <div className={s.buttonWrapper}><Button onClick={this.props.onConfirm} background={confirm.background} color={confirm.color}>{confirm.text}</Button></div>}
+          </div>}
         </div>
-        <div className={s.wrapper}>{this.props.children}</div>
-        {!!(cancel || confirm) && <div className={s.buttons}>
-          {!!cancel && <Button onClick={this.props.onCancel} background={cancel.background} color={cancel.color}>{cancel.text}</Button>}
-          {!!confirm && <Button onClick={this.props.onConfirm} background={confirm.background} color={confirm.color}>{confirm.text}</Button>}
-        </div>}
       </div>
     </div>;
   }

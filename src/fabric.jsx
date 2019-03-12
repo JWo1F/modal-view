@@ -8,7 +8,7 @@ export function showModal(...props) {
   return createModal(...props)();
 }
 
-export function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator }) {
+export function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator, type }) {
   return async function() {
     let result = {};
     let state = {};
@@ -93,6 +93,7 @@ export function createModal({ render, confirm, cancel, confirmOnEnter=true, canc
           cancel={cancel}
           title={title}
           descr={descr}
+          type={type}
           onCancel={() => onDone(false)}
           onConfirm={() => onDone(true)}
         />

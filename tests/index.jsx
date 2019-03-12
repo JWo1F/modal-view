@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createModal } from '../src/fabric.jsx';
 import './index.styl';
 import s from './style.styl';
+import { default as ButtonCore } from '../src/elements/button/index.jsx';
 
 import { alert, confirm, prompt } from '../src/defaults.jsx';
 
@@ -45,16 +46,92 @@ async function inspect(promise) {
 class Element extends React.Component {
   render() {
     return <div>
-      <div>Нормальная <Button name="фабрика" onClick={showModal1} /></div>
-      <div>Простой <Button name="конфирм" onClick={() => confirm('Подтвердите действие', 'Вы действительно хотите удалить элемент без возможности восстановления?', 'Да', 'Нет')} /></div>
-      <div>Простой <Button name="алерт" onClick={() => alert('Опрос удалён', 'Опрос был успешно удалён', 'Закрыть')} /></div>
-      <div>Простой <Button name="prompt" onClick={() => prompt('Введите название', 'И тогда мы сможем создать эту сущность', 'Название', 'Создать')} /></div>
+      <Button
+        name="Нормальная фабрика"
+        onClick={showModal1}
+      />
+      <Button
+        name="Простой конфирм"
+        onClick={() => {
+          return confirm({
+            title: 'Подтвердите действие',
+            descr: 'Вы действительно хотите удалить элемент без возможности восстановления?',
+            confirm: 'Да',
+            cancel: 'Нет'
+          });
+        }}
+        />
+      <Button
+        name="Простой алерт"
+        onClick={() => {
+          return alert({
+            title: 'Опрос удалён',
+            descr: 'Опрос был успешно удалён',
+            confirm: 'Закрыть'
+          });
+        }}
+      />
+      <Button
+        name="Простой prompt"
+        onClick={() => {
+          return prompt({
+            title: 'Введите название',
+            descr: 'И тогда мы сможем создать эту сущность',
+            placeholder: 'Название',
+            confirm: 'Создать'
+          });
+        }}
+      />
+      <Button
+        name="Успешный алерт"
+        onClick={() => {
+          return alert({
+            title: 'Опрос удалён',
+            descr: 'Опрос был успешно удалён',
+            confirm: 'Закрыть',
+            type: 'success'
+          });
+        }}
+      />
+      <Button
+        name="Ошибочный алерт"
+        onClick={() => {
+          return alert({
+            title: 'Ошибка',
+            descr: 'К сожалению, этот опрос невозможно удалить',
+            confirm: 'Закрыть',
+            type: 'error'
+          });
+        }}
+      />
+      <Button
+        name="Информационный алерт"
+        onClick={() => {
+          return alert({
+            title: 'Информация',
+            descr: 'Этот пункт меню будет доступен в скором времени',
+            confirm: 'Закрыть',
+            type: 'info'
+          });
+        }}
+      />
+      <Button
+        name="Предупреждающий алерт"
+        onClick={() => {
+          return alert({
+            title: 'Внимание',
+            descr: 'Вы удалили этот пункт меню. В будущем он будет недоступен.',
+            confirm: 'Закрыть',
+            type: 'warning'
+          });
+        }}
+      />
     </div>
   }
 }
 
 function Button({ name, onClick }) {
-  return <span className={s.link} onClick={() => inspect(onClick())}>{name}</span>;
+  return <div className={s.buttonWrapper}><ButtonCore onClick={() => inspect(onClick())}>{name}</ButtonCore></div>;
 }
 
 ReactDOM.render(<Element />, document.querySelector('#app'));
