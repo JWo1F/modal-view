@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createModal from '../src/fabric.jsx';
 import './index.styl';
+import s from './style.styl';
 
 import { alert, confirm } from '../src/defaults.jsx';
 
 const showModal1 = createModal({
   confirm: 'Да',
   cancel: true,
+  title: 'Создание группы',
   validator: ({ onChangeState, result }) => {
     if(!result.value) {
       onChangeState({ error: 'Название не может быть пустым!' });
@@ -25,12 +27,11 @@ const showModal1 = createModal({
   },
   render: ({ state, createInput, createButton, onValidate }) => {
     return <div>
-      <div style={{ fontWeight: 'bold', fontSize: '130%', marginBottom:'15px' }}>Создание группы</div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flexGrow: 1 }}>{createInput('value', { placeholder: 'Введите название группы', autoFocus: true })}</div>
-        <div style={{ flexShrink: 0, marginLeft: '10px' }}>{createButton('Проверить', onValidate)}</div>
+      <div className={s.inputHolder}>
+        <div className={s.inputWrapper}>{createInput('value', { placeholder: 'Введите название группы', autoFocus: true })}</div>
+        <div className={s.buttonWrapper}>{createButton('Проверить', onValidate)}</div>
       </div>
-      {!!state.error && <div style={{ background: '#d03232', color: '#fff', padding: '5px 10px', borderRadius: '3px', margin: '5px 0', fontWeight: 'bold' }}>Произошла ошибка: {state.error}</div>}
+      {!!state.error && <div className={s.error}>Произошла ошибка: {state.error}</div>}
     </div>;
   }
 });
@@ -38,17 +39,21 @@ const showModal1 = createModal({
 async function inspect(promise) {
   console.log('Modal show');
   const result = await promise;
-  console.log('Modal hide', result);
+  console.log('Modal hide:', result);
 }
 
 class Element extends React.Component {
   render() {
     return <div>
-      <div>Нормальная <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => inspect(showModal1())}>фабрика</span></div>
-      <div>Простой <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => inspect(confirm('Подтвердите действие', 'Вы действительно хотите удалить элемент без возможности восстановления?', 'Да', 'Нет'))}>конфирм</span></div>
-      <div>Простой <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => inspect(alert('Опрос удалён', 'Опрос был успешно удалён', 'Закрыть'))}>алерт</span></div>
+      <div>Нормальная <Button name="фабрика" onClick={showModal1} /></div>
+      <div>Простой <Button name="конфирм" onClick={() => confirm('Подтвердите действие', 'Вы действительно хотите удалить элемент без возможности восстановления?', 'Да', 'Нет')} /></div>
+      <div>Простой <Button name="алерт" onClick={() => alert('Опрос удалён', 'Опрос был успешно удалён', 'Закрыть')} /></div>
     </div>
   }
+}
+
+function Button({ name, onClick }) {
+  return <span className={s.link} onClick={() => inspect(onClick())}>{name}</span>;
 }
 
 ReactDOM.render(<Element />, document.querySelector('#app'));
