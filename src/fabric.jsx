@@ -21,7 +21,16 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
     };
 
     const createButton = (style, fn) => <Button onClick={fn} {...defButton(style)} />;
-    const createInput = (name, style) => <Input onChange={value => onChange({ [name]: value })} value={name in result ? result[name] : ''} {...defInput(style)} />;
+    const createInput = (name, style, afterChange) => {
+      return <Input
+        onChange={value => {
+          onChange({ [name]: value });
+          if(afterChange) afterChange();
+        }}
+        value={name in result ? result[name] : ''}
+        {...defInput(style)}
+      />
+    };
 
     let onDone;
     let markup;
@@ -39,7 +48,7 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
     const escHandler = e => cancelOnEsc && e.keyCode == 27 && onDone(false);
     
     onDone = async (isFail) => {
-      if(validator) {
+      if(!isFail && validator) {
         const res = await validator({ state, result, onChangeState, onChange });
         if(res === false) return;
       }
