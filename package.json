@@ -1,6 +1,6 @@
 {
   "name": "modal-view",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A react way to show modals",
   "main": "build/bundle.js",
   "scripts": {
