@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from './modal.jsx';
-import Button from './button.jsx';
-import Input from './input.jsx';
+import Button from './elements/button/index.jsx';
+import Input from './elements/input/index.jsx';
 
 export default function createModal({ render, confirm, cancel, confirmOnEnter=true, cancelOnEsc=true, title, descr, validator }) {
   return async function() {
@@ -46,10 +46,14 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
 
     const enterHandler = e => confirmOnEnter && e.keyCode == 13 && onDone(true);
     const escHandler = e => cancelOnEsc && e.keyCode == 27 && onDone(false);
+
+    function onValidate() {
+      return validator({ state, result, onChangeState, onChange });
+    }
     
     onDone = async (isSuccess) => {
       if(isSuccess && validator) {
-        const res = await validator({ state, result, onChangeState, onChange });
+        const res = await onValidate();
         if(res === false) return;
       }
       
@@ -71,6 +75,7 @@ export default function createModal({ render, confirm, cancel, confirmOnEnter=tr
           state,
           onChangeState,
           onDone,
+          onValidate,
           createButton,
           createInput
         });

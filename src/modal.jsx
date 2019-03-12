@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './modal.styl';
 import cx from 'classnames';
-import Button from './button.jsx';
+import Button from './elements/button/index.jsx';
 
 export default class Modal extends React.Component {
   state = {
