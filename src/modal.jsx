@@ -46,15 +46,13 @@ export default class Modal extends React.Component {
         {this.props.title && (
           <div className={s.title}>
             <div className={s.titleContent}>{this.props.title}</div>
-            <div className={s.close}>&times;</div>
+            <div className={s.close} onClick={this.props.onCancel}>&times;</div>
           </div>
         )}
         <div className={s.padded}>
           {!!icons[this.props.type] && <div className={s.icon} dangerouslySetInnerHTML={{ __html: icons[this.props.type] }} />}
-          <div>
-            <div className={s.header}>
-              {this.props.descr && <div className={s.descr}>{this.props.descr}</div>}
-            </div>
+          <div className={s.content}>
+            {this.props.descr && <div className={s.descr}>{this.props.descr}</div>}
             <div className={s.wrapper}>{this.props.children}</div>
             {!!(cancel || confirm) && <div className={s.buttons}>
               {!!cancel && <div className={s.buttonWrapper}><Button onClick={this.props.onCancel} background={cancel.background} color={cancel.color}>{cancel.text}</Button></div>}
